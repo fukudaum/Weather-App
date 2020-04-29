@@ -3,15 +3,15 @@ const request = require('request')
 const forecast = (latitude, longitude, callback)=>{
     const url = 'http://api.weatherstack.com/current?access_key=e7e8f47170f88f9a5908a51707f2f493&query=' + latitude + ',' + longitude
 
-    request({url: url, json: true}, (error,response) =>{
+    request({url, json: true}, (error, {body} = {}) =>{
         if(error){
             callback('Unable to connect to location services!', undefined)
         }
-        else if(response.body.error){
+        else if(body.error){
             callback('Unable to find location. Try another search.', undefined)
         }
         else{
-            const weather = response.body.current.weather_descriptions[0] + '. It is currently ' + response.body.current.temperature + ' degrees out. It feels like ' + response.body.current.feelslike + ' degrees out.'
+            const weather = body.current.weather_descriptions[0] + '. It is currently ' + body.current.temperature + ' degrees out. It feels like ' + body.current.feelslike + ' degrees out.'
             callback(undefined, weather)
         }
     })

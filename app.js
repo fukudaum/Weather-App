@@ -9,13 +9,13 @@ if(!location){
 
 }
 else{
-    geocode(location, (error, data) => {
+    geocode(location, (error, {latitude, longitude, location} = {}) => {
         if(error){
             console.log('Error', error)
         }
         else{
-            console.log(data.location)
-            forecast(data.latitude, data.longitude, (error, data) => {
+            console.log(location)
+            forecast(latitude, longitude, (error, data) => {
                 if(error){
                     console.log('Error', error)
                 }
@@ -24,7 +24,6 @@ else{
                 }
             })
         }
-        
     })
     
 }
